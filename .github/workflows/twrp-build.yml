@@ -1,8 +1,6 @@
 name: Compile TWRP Recovery Image
-
 on:
   workflow_dispatch:
-
 jobs:
   build:
     runs-on: ubuntu-22.04
@@ -11,7 +9,7 @@ jobs:
       run: |
         sudo rm -rf /usr/share/dotnet /etc/apt/sources.list.d/* /usr/local/lib/android
         sudo apt-get clean
-        
+
     - name: Set Up Building Packages
       run: |
         sudo apt-get update
@@ -20,7 +18,7 @@ jobs:
     - name: Fetch and Configure Stable Repo Launcher
       run: |
         mkdir -p ~/bin
-        curl https://googleapis.com > ~/bin/repo
+        curl -fsSL https://storage.googleapis.com/git-repo-downloads/repo -o ~/bin/repo
         chmod a+x ~/bin/repo
         sudo cp ~/bin/repo /usr/local/bin/repo
 
@@ -29,13 +27,13 @@ jobs:
         mkdir -p ~/workspace && cd ~/workspace
         git config --global user.email "git@github.com"
         git config --global user.name "GitHub Action"
-        /usr/local/bin/repo init --depth=1 -u https://github.com -b twrp-12.1
+        /usr/local/bin/repo init --depth=1 -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp.git -b twrp-12.1
         /usr/local/bin/repo sync -c -j$(nproc) --no-tags --no-clone-bundle
 
     - name: Clone Local Device Tree
       run: |
         cd ~/workspace
-        git clone https://github.com device/e12/E12
+        git clone https://github.com/Nousername3904q/android_device_e12_E12.git device/e12/E12
 
     - name: Apply Modern Device-Mapper Bugfix
       run: |
