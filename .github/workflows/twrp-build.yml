@@ -1,0 +1,52 @@
+name: Compile TWRP Recovery Image
+
+on:
+  workflow_dispatch: # Allows you to trigger the build manually with a click
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+    - name: Freeing Up Server Disk Space
+      run: |
+        sudo rm -rf /usr/share/dotnet /etc/apt/sources.list.d/* /usr/local/lib/android
+        sudo apt-get clean
+        
+    - name: Set Up Building Packages
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y bc bison build-essential curl flex g++-multilib gcc-multilib git gnupg gperf lib32ncurses5-dev lib32readline-dev lib32z1-dev liblz4-tool libncurses5-dev libsdl1.2-dev libssl-dev libxml2 libxml2-utils lzop pngcrush rsync schedtool squashfs-tools xsltproc zip zlib1g-dev python3 python-is-python3 cpio
+
+    - name: Install Repo Tool
+      run: |
+        mkdir ~/bin
+        curl https://googleapis.com > ~/bin/repo
+        chmod a+x ~/bin/repo
+        sudo ln -sf ~/bin/repo /usr/bin/repo
+
+    - name: Initialize TWRP Workspace
+      run: |
+        mkdir ~/workspace && cd ~/workspace
+        git config --global user.email "git@github.com"
+        git config --global user.name "GitHub Action"
+        repo init --depth=1 -u https://github.com -b twrp-12.1
+        repo sync -c -j$(nproc) --no-tags --no-clone-bundle
+
+    - name: Clone Local Device Tree
+      run: |
+        cd ~/workspace
+        git clone https://github.com device/e12/E12
+
+    - name: Compile TWRP Image
+      run: |
+        cd ~/workspace
+        export ALLOW_MISSING_DEPENDENCIES=true
+        . build/envsetup.sh
+        lunch omni_E12-eng
+        make recoveryimage -j$(nproc)
+
+    - name: Upload Completed TWRP File
+      uses: actions/upload-artifact@v4
+      with:
+        name: TWRP-E12-Recovery
+        path: /home/runner/workspace/out/target/product/E12/*.img
