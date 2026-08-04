@@ -35,7 +35,7 @@ jobs:
     - name: Clone Local Device Tree
       run: |
         cd ~/workspace
-        git clone https://github.com device/e12/E12
+        git clone https://github.com/Nousername3904q/android_device_e12_E12
 
     - name: Compile TWRP Image
       run: |
