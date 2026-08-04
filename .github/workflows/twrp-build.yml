@@ -19,8 +19,8 @@ jobs:
 
     - name: Install Repo Tool
       run: |
-        mkdir ~/bin
-        curl https://googleapis.com > ~/bin/repo
+        mkdir -p ~/bin
+        curl https://googlesource.com | base64 --decode -> ~/bin/repo
         chmod a+x ~/bin/repo
         sudo ln -sf ~/bin/repo /usr/bin/repo
 
