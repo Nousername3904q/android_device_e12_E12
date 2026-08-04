@@ -1,3 +1,4 @@
+
 #
 # Copyright (C) 2026 The Android Open Source Project
 # Copyright (C) 2026 SebaUbuntu's TWRP device tree generator
@@ -111,3 +112,5 @@ TW_SCREEN_BLANK_ON_BOOT := true
 TW_INPUT_BLACKLIST := "hbtp_vm"
 TW_USE_TOOLBOX := true
 TW_INCLUDE_REPACKTOOLS := true
+BOARD_MOVE_RECOVERY_RESOURCES_TO_VENDOR_BOOT := true
+
