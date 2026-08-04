@@ -1,11 +1,9 @@
-
 #
 # Copyright (C) 2026 The Android Open Source Project
 # Copyright (C) 2026 SebaUbuntu's TWRP device tree generator
 #
 # SPDX-License-Identifier: Apache-2.0
 #
-
 DEVICE_PATH := device/e12/E12
 
 # For building with minimal manifest
@@ -21,6 +19,7 @@ AB_OTA_PARTITIONS += \
     vbmeta_vendor \
     boot
 BOARD_USES_RECOVERY_AS_BOOT := true
+BOARD_BUILD_SYSTEM_ROOT_IMAGE := true
 
 # Architecture
 TARGET_ARCH := arm64
@@ -29,7 +28,6 @@ TARGET_CPU_ABI := arm64-v8a
 TARGET_CPU_ABI2 := 
 TARGET_CPU_VARIANT := generic
 TARGET_CPU_VARIANT_RUNTIME := cortex-a53
-
 TARGET_2ND_ARCH := arm
 TARGET_2ND_ARCH_VARIANT := armv7-a-neon
 TARGET_2ND_CPU_ABI := armeabi-v7a
@@ -113,4 +111,3 @@ TW_INPUT_BLACKLIST := "hbtp_vm"
 TW_USE_TOOLBOX := true
 TW_INCLUDE_REPACKTOOLS := true
 BOARD_MOVE_RECOVERY_RESOURCES_TO_VENDOR_BOOT := true
-
