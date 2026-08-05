@@ -1,4 +1,4 @@
-# Android device tree for the big kimmy phone (E12)
+# TWRP device tree for the big kimmy phone (E12)
 
 ```
 #
