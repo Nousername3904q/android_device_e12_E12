@@ -1,4 +1,4 @@
-# Android device tree for E12 E12 (E12)
+# Android device tree for the big kimmy phone (E12)
 
 ```
 #
